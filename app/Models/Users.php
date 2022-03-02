@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Users extends Model
 {
     use HasFactory;
-    public function post(){
-    	return $this->hasMany(Post::class);
+    public function todolist(){
+    	return $this->hasMany(Todolist::class);
 }
 }

@@ -12,7 +12,7 @@ class Post extends Model
     protected $fillable = [
        'user_id','judul', 'isi', 'slug','gambar'
     ];
-    public function users(){
-    	return $this->belongsTo(Users::class);
-}
+//     public function users(){
+//     	return $this->belongsTo(Users::class);
+// }
 }
