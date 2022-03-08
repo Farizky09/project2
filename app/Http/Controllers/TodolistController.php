@@ -10,27 +10,31 @@ use Illuminate\Support\Facades\Auth;
 
 class TodolistController extends Controller
 {
-    
 
-public function index()
-{
-$todolists = Todolist::all();
-return view('todo', compact('todolists'));
-}
 
-public function store(Request $request)
-{
-$data = $request->validate([
+    public function index()
+    {
+        $todolists = Todolist::all();
+        return view('todo', compact('todolists'));
+    }
 
-    'content' => 'required'
-]);
-    Todolist::create($data);
+    public function store(Request $request)
+    {
+        $data = $request->validate([
 
-}
+            'content' => 'required'
+        ]);
+        $todo = new Todolist();
+        $todo->fill($request->all());
+        $todo->user_id = auth()->user('web')->id;
+        $todo->save();
 
-public function destroy(Todolist $todolist) //menghapus data todolist
-{
-    $todolist->delete();
-   return back(); 
-}
+        return $todo;
+    }
+
+    public function destroy(Todolist $todolist) //menghapus data todolist
+    {
+        $todolist->delete();
+        return back();
+    }
 }
