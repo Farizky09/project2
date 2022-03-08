@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', [TodolistController::class, 'index'])->name('index');
+Route::post('/', [TodolistController::class, 'store'])->name('store');
+Route::delete('/{todolist:id}', [TodolistController::class, 'destroy'])->name('destroy');
 
 Auth::routes();
 
@@ -31,7 +33,5 @@ Route::middleware(['auth'::class])->group(function(){
 
     Route::get('/post-list',[PostController::class,'index'])->name('post.list');
     Route::get('/post-add',[PostController::class,'addPost'])->name('add.post');
-    Route::get('/', [TodolistController::class, 'index'])->name('index');
-    Route::post('/', [TodolistController::class, 'store'])->name('store');
-    Route::delete('/{todolist:id}', [TodolistController::class, 'destroy'])->name('destroy');
+  
 });

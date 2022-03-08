@@ -25,9 +25,10 @@ $data = $request->validate([
     'content' => 'required'
 ]);
     Todolist::create($data);
-    return back();
+
 }
-public function destroy(Todolist $todolist) //menghapus data post
+
+public function destroy(Todolist $todolist) //menghapus data todolist
 {
     $todolist->delete();
    return back(); 
