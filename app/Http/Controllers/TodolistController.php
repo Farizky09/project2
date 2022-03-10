@@ -32,6 +32,15 @@ class TodolistController extends Controller
         return $todo;
     }
 
+    public function list()
+    {
+    $user_id = Auth::id();
+
+    $todo = Todolist::query()->where('user_id','=',$user_id)->get();
+
+    return $todo;
+    }
+
     public function destroy(Todolist $todolist) //menghapus data todolist
     {
         $todolist->delete();

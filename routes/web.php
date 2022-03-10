@@ -31,6 +31,7 @@ Route::middleware(['auth'::class])->group(function(){
     Route::get('/', [TodolistController::class, 'index'])->name('index');
     Route::post('/', [TodolistController::class, 'store'])->name('store');
     Route::delete('/{todolist:id}', [TodolistController::class, 'destroy'])->name('destroy');
+    Route::get('/list', [TodolistController::class, 'list'])->name('list');
     
     Route::get('/post-list',[PostController::class,'index'])->name('post.list');
     Route::get('/post-add',[PostController::class,'addPost'])->name('add.post');
