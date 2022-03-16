@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todo list</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.cs" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -26,10 +26,10 @@
                     @csrf
                     <div class="input-group">
                         <input type="text" name="content" id="content" class="form-control" placeholder="Tambah Tugas kamu">
-                        <button type="submit" class="btn btn-dark btn-sm px-4"><i class="fas fa-plus"></i></button>
+                        <button type="submit" class="btn btn-dark btn-sm px-4"><i class="fa fa-plus"></i></button>
                     </div>
-                    <div id="list-todo">
-                        
+                    <div id="list-todo" class="mt-2">
+
                     </div>
 
                 </form>
@@ -37,15 +37,13 @@
             </div>
         </div>
     </div>
-   
+
 </body>
-
-
-</div>
 
 
 <script type="text/javascript">
     $(document).ready(function() {
+        listTodo()
         $("#form-add").submit(function(event) {
             event.preventDefault();
             var content = $('#content').val();
@@ -62,27 +60,47 @@
                     content: content
                 },
                 success: function(result) {
-
+                    $('#content').val('')
+                    listTodo()
                 }
             });
         });
     });
 
-    $(document).ready( function () {
+    function listTodo() {
+
         $.ajax({
-                            url: "{{ route('list') }}", 
-                            type: 'GET',
-                            cache: true, 
-                            success: function(response){
-                                $.each(response, function (key, value) { 
-                                    $('#list-todo').append("<tr>\
-                                                <td>"+.content+"</td>\
-                                               
-                                                </tr>");
-                                })
-                            }
-                            
-                        });
+            url: "{{ route('list') }}",
+            type: 'GET',
+            cache: true,
+            success: function(response) {
+                $('#list-todo').html('')
+                $.each(response, function(key, value) {
+                    console.log(value);
+                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <a onclick="deleteTodo('+value.id+')"><i class="fa fa-trash" aria-hidden="true"></i></a></div>');
+                })
+            }
+
+        });
+    }
+
+    function deleteTodo(id) {
+        if (confirm("apakah anda yakin akan menghapus ini?")) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            $.ajax({
+                method: 'DELETE',
+                url: "/"+id,
+                success: function(result) {
+                    listTodo()
+                }
+            });
+        }
+    }
 </script>
 
 </html>

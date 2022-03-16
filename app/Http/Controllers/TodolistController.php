@@ -44,6 +44,6 @@ class TodolistController extends Controller
     public function destroy(Todolist $todolist) //menghapus data todolist
     {
         $todolist->delete();
-        return back();
+        return 1;
     }
 }
