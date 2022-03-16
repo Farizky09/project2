@@ -77,7 +77,7 @@
                 $('#list-todo').html('')
                 $.each(response, function(key, value) {
                     console.log(value);
-                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <a onclick="deleteTodo('+value.id+')"><i class="fa fa-trash" aria-hidden="true"></i></a></div>');
+                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="deleteTodo('+value.id+')" role="button"><i class="fa fa-trash" aria-hidden="true"></i></span></div>');
                 })
             }
 
