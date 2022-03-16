@@ -28,13 +28,20 @@
                         <input type="text" name="content" id="content" class="form-control" placeholder="Tambah Tugas kamu">
                         <button type="submit" class="btn btn-dark btn-sm px-4"><i class="fas fa-plus"></i></button>
                     </div>
+                    <div id="list-todo">
+                        
+                    </div>
+
                 </form>
 
             </div>
         </div>
     </div>
+   
 </body>
 
+
+</div>
 
 
 <script type="text/javascript">
@@ -60,6 +67,22 @@
             });
         });
     });
+
+    $(document).ready( function () {
+        $.ajax({
+                            url: "{{ route('list') }}", 
+                            type: 'GET',
+                            cache: true, 
+                            success: function(response){
+                                $.each(response, function (key, value) { 
+                                    $('#list-todo').append("<tr>\
+                                                <td>"+.content+"</td>\
+                                               
+                                                </tr>");
+                                })
+                            }
+                            
+                        });
 </script>
 
 </html>
