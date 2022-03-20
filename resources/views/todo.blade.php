@@ -76,9 +76,8 @@
             success: function(response) {
                 $('#list-todo').html('')
                 $.each(response, function(key, value) {
-                    console.log(value); //menampilkan data value
-                //    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <a onclick="deleteTodo('+value.id+')"><i class="fa fa-trash" aria-hidden="true"></i></a></div>'); //untuk mengisi conten saat dimasukkan otomatis akan ke restart seperti awal (kosongan)
-                     $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="deleteTodo('+value.id+')" role="button"><i class="fa fa-trash" aria-hidden="true"></i></span></div>');
+                    console.log(value);
+                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="deleteTodo('+value.id+')" role="button"><i class="fa fa-trash" aria-hidden="true"></i></span></div>'); //saat memasukkan isi conten lalu disubmit otomatis field kerestart (kosong) dan bisa diisi lagi
                 })
             }
 
