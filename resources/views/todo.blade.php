@@ -22,7 +22,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <h3>To-do List</h3>
-                <form action="{{ route('store') }}" method="POST" autocomplete="off" id="form-add">
+                <form action="{{ route('store') }}" method="POST" autocomplete="off" id="form-add"> 
                     @csrf
                     <div class="input-group">
                         <input type="text" name="content" id="content" class="form-control" placeholder="Tambah Tugas kamu">
@@ -42,11 +42,11 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function() { //untuk menyimpan dalam document ready
         listTodo()
-        $("#form-add").submit(function(event) {
-            event.preventDefault();
-            var content = $('#content').val();
+        $("#form-add").submit(function(event) {  //form add id dari form yang dipakai
+            event.preventDefault(); //mencegah reload halaman ketika klik submit
+            var content = $('#content').val();  
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -54,8 +54,8 @@
             });
 
             $.ajax({
-                method: 'POST',
-                url: "{{ route('store') }}",
+                method: 'POST',  //method yang dipakai 
+                url: "{{ route('store') }}",  //route untuk function store 
                 data: {
                     content: content
                 },
@@ -70,14 +70,15 @@
     function listTodo() {
 
         $.ajax({
-            url: "{{ route('list') }}",
-            type: 'GET',
+            url: "{{ route('list') }}", //route yang dipakai untuk menampilkan list
+            type: 'GET', //jenis urlnya
             cache: true,
             success: function(response) {
                 $('#list-todo').html('')
                 $.each(response, function(key, value) {
-                    console.log(value);
-                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <a onclick="deleteTodo('+value.id+')"><i class="fa fa-trash" aria-hidden="true"></i></a></div>');
+                    console.log(value); //menampilkan data value
+                //    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <a onclick="deleteTodo('+value.id+')"><i class="fa fa-trash" aria-hidden="true"></i></a></div>'); //untuk mengisi conten saat dimasukkan otomatis akan ke restart seperti awal (kosongan)
+                     $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="deleteTodo('+value.id+')" role="button"><i class="fa fa-trash" aria-hidden="true"></i></span></div>');
                 })
             }
 
@@ -85,7 +86,7 @@
     }
 
     function deleteTodo(id) {
-        if (confirm("apakah anda yakin akan menghapus ini?")) {
+        if (confirm("apakah anda yakin akan menghapus ini?")) {  //alert saat menghapus content
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
