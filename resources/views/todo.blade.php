@@ -76,14 +76,42 @@
             success: function(response) {
                 $('#list-todo').html('')
                 $.each(response, function(key, value) {
-                    console.log(value);
-                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="deleteTodo('+value.id+')" role="button"><i class="fa fa-trash" aria-hidden="true"></i></span></div>'); //saat memasukkan isi conten lalu disubmit otomatis field kerestart (kosong) dan bisa diisi lagi
+                   // console.log(value);
+                    $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="deleteTodo('+value.id+')" role="button"><i class="fa fa-trash" aria-hidden="true"></i>
+                        <span onclick="updateTodo('+value.id+')" role="button"><i class="fa-solid fa-pen" aria-hidden="true"></i></span></div>'); //saat memasukkan isi conten lalu disubmit otomatis field kerestart (kosong) dan bisa diisi lagi
+                 //   $('#list-todo').append('<div class="d-flex justify-content-between"><span>' + value.content + '</span> <span onclick="updateTodo('+value.id+')" role="button"><i class="fa-solid fa-pen" aria-hidden="true"></i></span></div>');
                 })
             }
 
         });
     }
 
+    function updateTodo(id) {
+        $(document).on('click', function(){
+        $("#form-add").submit(function(event) {  //form add id dari form yang dipakai
+            event.preventDefault(); //mencegah reload halaman ketika klik submit
+            var content =  $(this).data('id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                method: 'PUT',  //method yang dipakai 
+                url: "/"+id,   //route untuk function store 
+                data: {
+                   content:content
+                },
+                success: function(data) {
+                  //  console.log(data);
+                 //   $('#content').val('')
+                    listTodo()
+                }
+            });
+        });
+    }
+    }
     function deleteTodo(id) {
         if (confirm("apakah anda yakin akan menghapus ini?")) {  //alert saat menghapus content
             $.ajaxSetup({
